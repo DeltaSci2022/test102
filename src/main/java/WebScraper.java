@@ -1,4 +1,7 @@
 import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
+
+import java.io.IOException;
 
 public class WebScraper {
 
@@ -9,6 +12,15 @@ public class WebScraper {
         WebClient client = new WebClient();
         client.getOptions().setJavaScriptEnabled(false);
         client.getOptions().setCssEnabled(false);
+
+        try {
+            HtmlPage page = client.getPage(url);
+            System.out.println(page.asXml());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
 
 
     }
