@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Film {
 
     private int rank;
@@ -5,7 +7,7 @@ public class Film {
     private String[] cast;
     private String[] director;
     private String title;
-    private double score;
+    private double rate;
 
     public int getRank() {
         return rank;
@@ -47,12 +49,16 @@ public class Film {
         this.title = title;
     }
 
-    public double getScore() {
-        return score;
+    public double getRate() {
+        return rate;
     }
 
-    public void setScore(double score) {
-        this.score = score;
+    public void setRate(double score) {
+        this.rate = score;
+    }
+
+    public String toString(){
+        return rank + " " + title + " " + year + " " + Arrays.toString(cast) + " " + rate + " "+ Arrays.toString(director);
     }
 
 
