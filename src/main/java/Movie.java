@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class Film {
+public class Movie {
 
     private int rank;
     private int year;

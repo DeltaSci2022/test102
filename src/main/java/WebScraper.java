@@ -3,6 +3,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class WebScraper {
 
@@ -12,21 +13,19 @@ public class WebScraper {
     public static void main(String[] args) throws Exception {
 
         final Document document = Jsoup.connect(url).get();
-        ArrayList<Film> filmList = new ArrayList<Film>();
+        ArrayList<Movie> movieList = new ArrayList<Movie>();
 
         for (Element row : document.select("table.chart.full-width tr")){
-           String rankNameYear = row.select(".titleColumn").text();
-            System.out.println(rankNameYear);
 
-            String rank = splitter(rankNameYear,".",0);
-            System.out.println(rank);
+                String rank = row.select(".titleColumn").text().split("\\. ",2)[0];
+                String year = row.select(".titleColumn").select(".secondaryInfo").text();
+                String title = row.select(".titleColumn").text().replace(year, "").replace(rank+".","");
+                String rate = row.select(".imdbRating").text();
+                Movie film = new Movie();
 
-//            movie.setRank(Integer.parseInt(splitter(rankNameYear, ".", 0)));
-//            movie.setTitle(splitter(rankNameYear, "(", 0));
-//            movie.setYear(Integer.parseInt(splitter(rankNameYear, "(", 1).replace(")","")));
-//            movie.setRate(Double.parseDouble(row.select(".imdbRating").text()));
-//            filmList.add(movie);
-        }
+            System.out.println("Rank: " + rank + " Year: "+ year+ " Rate: "+rate+" Title: "+title);
+
+
 
 
 
@@ -42,11 +41,9 @@ public class WebScraper {
 
     }
 
-    static String splitter(String input, String regex, int number){
-        String[] data = input.split(regex);
-        return data[number].trim();
-    }
 
 
 
+
+}
 }
