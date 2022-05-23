@@ -1,12 +1,32 @@
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 import java.util.Arrays;
+
+@Entity
+@Table(name="Movies")
 
 public class Movie {
 
+    @Id
+    @Column(name="rank")
     private int rank;
+
+    @Column(name="year")
     private int year;
+
+    @Column(name="cast")
     private String[] cast;
+
+    @Column(name="director")
     private String[] director;
+
+    @Column(name="title")
     private String title;
+
+    @Column(name="rate")
     private double rate;
 
     public int getRank() {
@@ -55,6 +75,16 @@ public class Movie {
 
     public void setRate(double score) {
         this.rate = score;
+    }
+
+    public Movie(int rank, int year, String title, double rate) {
+        this.rank = rank;
+        this.year = year;
+        this.title = title;
+        this.rate = rate;
+    }
+
+    public Movie() {
     }
 
     @Override

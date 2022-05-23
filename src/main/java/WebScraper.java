@@ -1,3 +1,7 @@
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -10,6 +14,10 @@ public class WebScraper {
     // This code will scrape the 250 best movies on IMDB and create movie objects of them.
     private static final String url = "https://www.imdb.com/chart/top/";
 
+    SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Movie.class).buildSessionFactory();
+
+    Session session = factory.getCurrentSession();
+
     public static void main(String[] args) throws Exception {
 
         final Document document = Jsoup.connect(url).get();
@@ -21,10 +29,6 @@ public class WebScraper {
                 String year = row.select(".titleColumn").select(".secondaryInfo").text();
                 String title = row.select(".titleColumn").text().replace(year, "").replace(rank+".","");
                 String rate = row.select(".imdbRating").text();
-                Movie film = new Movie();
-
-            System.out.println("Rank: " + rank + " Year: "+ year+ " Rate: "+rate+" Title: "+title);
-
 
 
 
