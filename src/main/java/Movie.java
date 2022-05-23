@@ -57,9 +57,18 @@ public class Movie {
         this.rate = score;
     }
 
-    public String toString(){
-        return rank + " " + title + " " + year + " " + Arrays.toString(cast) + " " + rate + " "+ Arrays.toString(director);
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "rank=" + rank +
+                ", year=" + year +
+                ", cast=" + Arrays.toString(cast) +
+                ", director=" + Arrays.toString(director) +
+                ", title='" + title + '\'' +
+                ", rate=" + rate +
+                '}';
     }
+}
 
 
 
