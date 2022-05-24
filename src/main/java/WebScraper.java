@@ -14,40 +14,40 @@ public class WebScraper {
     // This code will scrape the 250 best movies on IMDB and create movie objects of them.
     private static final String url = "https://www.imdb.com/chart/top/";
 
-    SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Movie.class).buildSessionFactory();
-
-    Session session = factory.getCurrentSession();
+    static ArrayList<Movie> movies = new ArrayList<Movie>();
 
     public static void main(String[] args) throws Exception {
 
         final Document document = Jsoup.connect(url).get();
-        ArrayList<Movie> movieList = new ArrayList<Movie>();
 
         for (Element row : document.select("table.chart.full-width tr")){
 
-                String rank = row.select(".titleColumn").text().split("\\. ",2)[0];
-                String year = row.select(".titleColumn").select(".secondaryInfo").text();
-                String title = row.select(".titleColumn").text().replace(year, "").replace(rank+".","");
-                String rate = row.select(".imdbRating").text();
+            String rank = row.select(".titleColumn").text().split("\\. ",2)[0];
+            String year = row.select(".titleColumn").select(".secondaryInfo").text();
+            String title = row.select(".titleColumn").text().replace(year, "").replace(rank+".","");
+            String rate = row.select(".imdbRating").text();
 
+            //Maak een arraylist met alle film objecten
+            if (!rank.isEmpty()) {
+                System.out.println(rank+" "+ year + " "+ title + " " + rate);
+                movies.add(new Movie(rank, year, title, rate));
+            }
+        }
 
+        //Roep de methode aan om de objecten in de sql database te plaatsen
+        addToDatabase();
+    }
 
+    private static void addToDatabase(){
+        HibernateDatabaseController controller = new HibernateDatabaseController(new Movie());
 
-
-
-
-
-
-
-
-
-
-
+        //Going through our list
+        for (Movie m : movies){
+            controller.create(m);
+        }
+        controller.closeController();
     }
 
 
 
-
-
-}
 }

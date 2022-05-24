@@ -21,8 +21,9 @@ public class HibernateDatabaseController {
             // commit the transaction
             session.getTransaction().commit();
 
-        } finally {
-            factory.close();
+        } catch (Exception e){
+            e.printStackTrace();
+            closeController();
         }
 
     }
@@ -41,5 +42,9 @@ public class HibernateDatabaseController {
 
     public HibernateDatabaseController(Object objectToControl) {
         this.factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(objectToControl.getClass()).buildSessionFactory();;
+    }
+
+    public void closeController(){
+        factory.close();
     }
 }
