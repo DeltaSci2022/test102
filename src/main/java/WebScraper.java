@@ -26,11 +26,12 @@ public class WebScraper {
             String year = row.select(".titleColumn").select(".secondaryInfo").text();
             String title = row.select(".titleColumn").text().replace(year, "").replace(rank+".","");
             String rate = row.select(".imdbRating").text();
+            String cleanYear = year.replaceAll("[^\\d.]", "");
 
             //Maak een arraylist met alle film objecten
             if (!rank.isEmpty()) {
                 System.out.println(rank+" "+ year + " "+ title + " " + rate);
-                movies.add(new Movie(rank, year, title, rate));
+                //movies.add(new Movie(Integer.parseInt(rank), Integer.parseInt(cleanYear), title, Double.parseDouble(rate)));
             }
         }
 

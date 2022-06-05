@@ -1,3 +1,5 @@
+package com.simon.jackson.demo;
+
 import javax.persistence.*;
 
 @Entity
